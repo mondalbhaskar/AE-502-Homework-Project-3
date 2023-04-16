@@ -1,3 +1,6 @@
+#code can be found at:
+# https://github.com/mondalbhaskar/AE-502-Homework-Project-3.git
+
 import numpy as np
 import matplotlib.pyplot as plt
 import math
