@@ -50,7 +50,7 @@ def dG_dt(L,G,H,l,g,h):
 def dH_dt(L,G,H,l,g,h):
     return 0
 def dl_dt(L,G,H,l,g,h):
-    return 1/(2*L**2)
+    return 1/(L**3)
 def dg_dt(L,G,H,l,g,h):
     #return 1/(2*G**2)
     return omega_rot*math.cos(i)
