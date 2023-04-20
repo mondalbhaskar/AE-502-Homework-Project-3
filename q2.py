@@ -2,6 +2,8 @@
 # https://github.com/mondalbhaskar/AE-502-Homework-Project-3.git
 
 import numpy as np
+import plotly
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import math
 from scipy.integrate import ode
@@ -83,7 +85,12 @@ l=[0] #mean anomaly
 g=[0] #longitude of ascending node
 h=[0] #argument of pericenter
 #time=[0] #array for time
-
+print(L)
+print(G)
+print(H)
+print(l)
+print(g)
+print(h)
 t=0
 #solve ivp
 # # Create the `ode` object with `lsoda` solver
@@ -149,23 +156,42 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.plot(X, Y, Z)
 
-#show point (0,0,0) as a red dot, which is the central body
-ax.scatter(0,0,0,c='r',marker='o')
+
+#show point (0,0,0) as a blue dot, which is the central body
+ax.scatter(0,0,0,c='b',marker='o')
+ax.text(0,0,0,'Central body')
 
 #show the initial position as a green dot
 ax.scatter(X[0],Y[0],Z[0],c='g',marker='o')
-#show the final position as a blue dot
-ax.scatter(X[-1],Y[-1],Z[-1],c='b',marker='o')
+ax.text(X[0],Y[0],Z[0],'Initial position')
+#show the final position as a red dot
+ax.scatter(X[-1],Y[-1],Z[-1],c='r',marker='o')
+ax.text(X[-1],Y[-1],Z[-1],'Final position')
+
 
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 
 
-#save the figure as a jpg
-fig.savefig('orbit2.jpg')
-
+#save the figure
+#fig.savefig('./orbit22.png',bbox_inches='tight')
 plt.show()
+
+#plot the same orbit with plotly
+fig = go.Figure(data=[go.Scatter3d(x=X, y=Y, z=Z,mode='lines',name='Orbit')])
+fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[0],mode='markers',marker=dict(size=10,color='blue',line=dict(color='blue', width=2)),name='Central body'))
+fig.add_trace(go.Scatter3d(x=[X[0]], y=[Y[0]], z=[Z[0]],mode='markers',marker=dict(size=10,color='green',line=dict(color='green', width=2)),name='Initial position'))
+fig.add_trace(go.Scatter3d(x=[X[-1]], y=[Y[-1]], z=[Z[-1]],mode='markers',marker=dict(size=10,color='red',line=dict(color='red', width=2)),name='Final position'))
+fig.update_layout(scene = dict(
+                    xaxis_title='X',
+                    yaxis_title='Y',
+                    zaxis_title='Z'),
+                    margin=dict(r=20, l=10, b=10, t=10))
+
+#save the plotly plot to a file
+#fig.write_image("./orbit_plotly.png")
+fig.show()
 
 
 
